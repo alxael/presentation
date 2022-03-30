@@ -2,7 +2,7 @@ import { styled, Typography, Link } from "@mui/material";
 import { ReactComponent as PageNotFoundSvg } from "../svgs/404.svg";
 
 const Main = styled("main")(({ theme }) => ({
-  minHeight: "calc(100vh - 2rem)",
+  minHeight: "calc(100vh - 6rem)",
   minWidth: "calc(100vw - 2rem)",
   padding: "1rem",
   background: theme.palette.background.default,

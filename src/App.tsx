@@ -6,10 +6,15 @@ import { useMediaQuery, CssBaseline } from "@mui/material";
 
 import MainPage from "./pages/mainPage";
 import PageNotFoundPage from "./pages/pageNotFoundPage";
+import ContactPage from "./pages/contactPage";
+import Navbar from "./components/shared/navbar";
 
 const App = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [showNavbar, setShowNavbar] = useState(true);
   const [light, setLight] = useState(
-    useMediaQuery("(prefers-color-scheme: light)")
+    useMediaQuery("(prefers-color-scheme: light)") ||
+      window.sessionStorage.getItem("theme") === "light"
   );
 
   const getTheme = (light: boolean) => {
@@ -31,14 +36,17 @@ const App = () => {
 
   const changeTheme = () => {
     setLight(!light);
+    window.sessionStorage.setItem("theme", light ? "dark" : "light");
   };
 
   return (
     <ThemeProvider theme={{ ...(light ? lightTheme : darkTheme), changeTheme }}>
-      <CssBaseline/>
+      <CssBaseline />
       <BrowserRouter>
+        <Navbar show={showNavbar} />
         <Routes>
-          <Route path="/" element={<MainPage />}></Route>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="*" element={<PageNotFoundPage />} />
         </Routes>
       </BrowserRouter>

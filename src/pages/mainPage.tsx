@@ -1,20 +1,13 @@
-import { useEffect, useState } from "react";
-import {
-  Box,
-  styled,
-  Typography,
-  Divider,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-} from "@mui/material";
+import { useEffect, useState, Fragment } from "react";
+import { useNavigate } from "react-router-dom";
+import { Box, styled, Typography, Divider, ButtonBase } from "@mui/material";
 import { useTheme } from "@mui/material";
 
 import { ReactComponent as SomeRandomSvg } from "../svgs/404.svg";
-import Navbar from "../components/navbar";
-import Footer from "../components/footer";
-import ContactForm from "../components/contactForm";
+import Footer from "../components/mainPage/footer";
+import ContentCard, {
+  ContentCardProps,
+} from "../components/mainPage/contentCard";
 
 const Main = styled("main")(({ theme }) => ({
   maxWidth: "100vw",
@@ -32,33 +25,9 @@ const Hero = styled(Box)(({ theme }) => ({
   alignItems: "center",
 }));
 
-const Card = styled(Box)(({ theme }) => ({
+const Contact = styled(ButtonBase)(({ theme }) => ({
   padding: "5%",
-  background: theme.palette.background.default,
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-  flexWrap: "wrap",
-  gap: "5rem",
-}));
-
-const CardInfo = styled("div")(({ theme }) => ({
-  width: "40%",
-  [theme.breakpoints.down("md")]: {
-    width: "100%",
-  },
-}));
-
-const CardMedia = styled(SomeRandomSvg)(({ theme }) => ({
-  width: "50%",
-  [theme.breakpoints.down("md")]: {
-    width: "100%",
-  },
-}));
-
-const Contact = styled(Box)(({ theme }) => ({
-  padding: "5%",
+  width: "100%",
   background: `linear-gradient(to left, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
   display: "flex",
   flexDirection: "column",
@@ -67,16 +36,31 @@ const Contact = styled(Box)(({ theme }) => ({
 }));
 
 const MainPage = () => {
-  const [isContactFormOpen, setIsContactFormOpen] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [scrollPosition, setScrollPosition] = useState(0);
+  const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const theme = useTheme();
+
+  const contentCards: ContentCardProps[] = [
+    {
+      title: "Reason #1 you should work with us",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eget ante dolor. Ut ut sagittis metus, pretium pulvinar ligula. Nulla bibendum tortor auctor augue varius, et maximus magna dictum. Pellentesque vel turpis pellentesque, pretium velit a, pharetra neque. Aenean blandit ornare ipsum eu consectetur. Etiam convallis efficitur accumsan. Phasellus maximus rhoncus auctor. Maecenas faucibus lobortis ligula ut venenatis. Nullam sit amet nibh non risus lobortis sollicitudin. Nam tristique efficitur ante, porttitor facilisis diam vehicula ut. Mauris cursus enim dolor, et sagittis diam scelerisque nec.",
+      alignment: "right",
+      media: SomeRandomSvg,
+    },
+    {
+      title: "Reason #2 you should work with us",
+      description:
+        "Pellentesque eu orci mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ut felis et neque vulputate facilisis vel sed elit. Maecenas odio diam, dictum at vestibulum sed, convallis egestas turpis. Suspendisse pretium eros in nulla iaculis pharetra. Cras faucibus ipsum in suscipit aliquet. Phasellus rutrum lacus sodales, iaculis nisl sed, maximus diam. Etiam porttitor pulvinar justo eu pretium. Aliquam aliquet metus magna, in mollis nisi vehicula eget.",
+      alignment: "left",
+      media: SomeRandomSvg,
+    },
+  ];
 
   const handleScroll = () => {
     setScrollPosition(window.scrollY);
-  };
-
-  const handleContactFormClose = () => {
-    setIsContactFormOpen(false);
   };
 
   useEffect(() => {
@@ -88,77 +72,59 @@ const MainPage = () => {
 
   return (
     <Main>
-      <Navbar show={scrollPosition > theme.typography.fontSize * 25} />
       <Hero>
-        <Typography sx={{ typography: { sm: "h1", xs: "h2" } }} align="center">
+        <Typography
+          sx={{ typography: { sm: "h1", xs: "h2" } }}
+          color="primary.contrastText"
+          align="center"
+        >
           FrightFlex
         </Typography>
-        <Typography variant="subtitle1" align="center">
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="primary.contrastText"
+        >
           We turn your vision into reality.
         </Typography>
       </Hero>
-      <Card>
-        <CardInfo>
-          <Typography variant="h3" align="right">
-            Reason #1 to business with us
-          </Typography>
-          <Typography variant="body1" align="right" flexWrap={"wrap"}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-            consectetur erat nisl, sit amet placerat turpis congue id. Mauris
-            cursus interdum nisl ut euismod. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Pellentesque placerat vulputate nisi,
-            in venenatis magna posuere in. Interdum et malesuada fames ac ante
-            ipsum primis in faucibus. Etiam et malesuada eros. Nulla eu nulla
-            tristique, posuere lacus eget, rutrum ipsum. Quisque urna quam,
-            euismod eget tempor quis, suscipit et ex. Curabitur mollis porttitor
-            ullamcorper. Suspendisse non ullamcorper justo. Maecenas pulvinar
-            posuere massa, ac pharetra elit imperdiet sit amet.
-          </Typography>
-        </CardInfo>
-        <CardMedia />
-      </Card>
-      <Divider />
-      <Card>
-        <CardMedia />
-        <CardInfo>
-          <Typography variant="h3" align="left">
-            Reason #2 to business with us
-          </Typography>
-          <Typography variant="body1" align="left">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-            consectetur erat nisl, sit amet placerat turpis congue id. Mauris
-            cursus interdum nisl ut euismod. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Pellentesque placerat vulputate nisi,
-            in venenatis magna posuere in. Interdum et malesuada fames ac ante
-            ipsum primis in faucibus. Etiam et malesuada eros. Nulla eu nulla
-            tristique, posuere lacus eget, rutrum ipsum. Quisque urna quam,
-            euismod eget tempor quis, suscipit et ex. Curabitur mollis porttitor
-            ullamcorper. Suspendisse non ullamcorper justo. Maecenas pulvinar
-            posuere massa, ac pharetra elit imperdiet sit amet.
-          </Typography>
-        </CardInfo>
-      </Card>
-      <Divider />
-      <Contact>
-        <Typography variant="h3" gutterBottom>
+      {contentCards.map((value, index) => {
+        return (
+          <Fragment key={index}>
+            <ContentCard {...value} />
+            <Divider />
+          </Fragment>
+        );
+      })}
+      <Contact
+        onClick={() => {
+          navigate("/contact");
+        }}
+      >
+        <Typography
+          variant="h3"
+          align="center"
+          color="primary.contrastText"
+          sx={{
+            typography: {
+              xs: "h4",
+              sm: "h3",
+            },
+          }}
+          gutterBottom
+        >
           Let's talk about how we could work together.
         </Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          onClick={() => {
-            setIsContactFormOpen(true);
-          }}
+        <Typography
+          variant="h6"
+          align="center"
+          color="primary.contrastText"
+          gutterBottom
         >
           Contact us
-        </Button>
+        </Typography>
       </Contact>
       <Footer />
-      <Dialog open={isContactFormOpen} onClose={handleContactFormClose}>
-        <DialogTitle>Contact us</DialogTitle>
-        <DialogContent>Fuck this form.</DialogContent>
-      </Dialog>
     </Main>
   );
 };
