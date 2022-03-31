@@ -1,16 +1,9 @@
 import { useEffect, useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  styled,
-  Typography,
-  Divider,
-  Button,
-} from "@mui/material";
+import { Box, styled, Typography, Divider, Button } from "@mui/material";
 import { useTheme } from "@mui/material";
 
 import { ReactComponent as SomeRandomSvg } from "../svgs/404.svg";
-import Footer from "../components/mainPage/footer";
 import ContentCard, {
   ContentCardProps,
 } from "../components/mainPage/contentCard";
@@ -140,7 +133,6 @@ const MainPage = (props: MainPageProps) => {
           Contact us
         </Button>
       </Contact>
-      <Footer />
     </Main>
   );
 };
