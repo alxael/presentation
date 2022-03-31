@@ -6,7 +6,9 @@ import {
   styled,
   useTheme,
   Fade,
+  Button,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const AppNavbar = styled(AppBar)(({ theme }) => ({
   height: "4rem",
@@ -23,6 +25,7 @@ export interface NavbarProps {
 
 const Navbar = (props: NavbarProps) => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -30,14 +33,21 @@ const Navbar = (props: NavbarProps) => {
         <Fade in={props.show} unmountOnExit>
           <AppNavbar position="sticky" hidden={props.show}>
             <Toolbar disableGutters>
-              <Typography
-                variant="h5"
-                color="textPrimary"
-                noWrap
-                sx={{ ml: 2 }}
+              <Button
+                variant="text"
+                color="inherit"
+                onClick={() => {
+                  setTimeout(() => {
+                    navigate("/");
+                  }, theme.transitions.duration.shorter);
+                }}
+                sx={{ ml: 2, textTransform: "none" }}
               >
-                FrightFlex
-              </Typography>
+                <Typography variant="h5" color="textPrimary" noWrap>
+                  FrightFlex
+                </Typography>
+              </Button>
+
               <Spacer />
               <Switch
                 sx={{ mr: 2 }}

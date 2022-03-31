@@ -45,7 +45,7 @@ const App = () => {
       <BrowserRouter>
         <Navbar show={showNavbar} />
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<MainPage setShowNavbar={setShowNavbar} />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="*" element={<PageNotFoundPage />} />
         </Routes>

@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState } from "react";
 import {
   TextField,
   Grid,
@@ -106,7 +106,7 @@ const ContactForm = () => {
 
   if (!completed) {
     return (
-      <Fragment>
+      <>
         <Typography
           variant="h3"
           sx={{ typography: { sm: "h3", xs: "h4" } }}
@@ -178,10 +178,29 @@ const ContactForm = () => {
             </Grid>
           </Grid>
         </form>
-      </Fragment>
+      </>
     );
   } else {
-    return <Typography variant="h3">Thank you for contacting us!</Typography>;
+    return (
+      <>
+        <Typography
+          align="center"
+          variant="h3"
+          sx={{ typography: { sm: "h3", xs: "h4" } }}
+          gutterBottom
+        >
+          Thank you for contacting us!
+        </Typography>
+        <Typography
+          align="center"
+          variant="subtitle1"
+          sx={{ typography: { sm: "subtitle1", xs: "subtitle2" } }}
+          gutterBottom
+        >
+          We will reach back to you as soon as possible.
+        </Typography>
+      </>
+    );
   }
 };
 

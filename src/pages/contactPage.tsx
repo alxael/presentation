@@ -7,21 +7,25 @@ const Main = styled("main")(({ theme }) => ({
 }));
 
 const Contact = styled(Box)(({ theme }) => ({
-  padding: "10% 15%",
+  padding: "5% 10%",
   backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
   display: "flex",
   alignItems: "center",
 }));
 
 const FormBox = styled(Box)({
-  padding: "5%",
+  padding: "7.5%",
 });
 
 const ContactPage = () => {
   return (
     <Main>
       <Contact>
-        <Typography variant="h2" color="primary.contrastText" sx={{ typography: { sm: "h2", xs: "h4" } }}>
+        <Typography
+          variant="h3"
+          color="primary.contrastText"
+          sx={{ typography: { xs: "h4", sm: "h3", md: "h2" } }}
+        >
           It always starts with a conversation.
         </Typography>
       </Contact>

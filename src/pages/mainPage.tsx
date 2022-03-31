@@ -1,6 +1,12 @@
 import { useEffect, useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, styled, Typography, Divider, ButtonBase } from "@mui/material";
+import {
+  Box,
+  styled,
+  Typography,
+  Divider,
+  Button,
+} from "@mui/material";
 import { useTheme } from "@mui/material";
 
 import { ReactComponent as SomeRandomSvg } from "../svgs/404.svg";
@@ -25,7 +31,7 @@ const Hero = styled(Box)(({ theme }) => ({
   alignItems: "center",
 }));
 
-const Contact = styled(ButtonBase)(({ theme }) => ({
+const Contact = styled(Box)(({ theme }) => ({
   padding: "5%",
   width: "100%",
   background: `linear-gradient(to left, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
@@ -35,11 +41,13 @@ const Contact = styled(ButtonBase)(({ theme }) => ({
   alignItems: "center",
 }));
 
-const MainPage = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export interface MainPageProps {
+  setShowNavbar: (value: boolean) => void;
+}
+
+const MainPage = (props: MainPageProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const theme = useTheme();
 
   const contentCards: ContentCardProps[] = [
@@ -70,6 +78,14 @@ const MainPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (scrollPosition < window.innerHeight / 2) {
+      props.setShowNavbar(false);
+    } else {
+      props.setShowNavbar(true);
+    }
+  }, [props, props.setShowNavbar, scrollPosition]);
+
   return (
     <Main>
       <Hero>
@@ -96,11 +112,7 @@ const MainPage = () => {
           </Fragment>
         );
       })}
-      <Contact
-        onClick={() => {
-          navigate("/contact");
-        }}
-      >
+      <Contact>
         <Typography
           variant="h3"
           align="center"
@@ -115,14 +127,18 @@ const MainPage = () => {
         >
           Let's talk about how we could work together.
         </Typography>
-        <Typography
-          variant="h6"
-          align="center"
-          color="primary.contrastText"
-          gutterBottom
+        <Button
+          variant="outlined"
+          color="inherit"
+          size="large"
+          onClick={() => {
+            setTimeout(() => {
+              navigate("/contact");
+            }, theme.transitions.duration.short);
+          }}
         >
           Contact us
-        </Typography>
+        </Button>
       </Contact>
       <Footer />
     </Main>

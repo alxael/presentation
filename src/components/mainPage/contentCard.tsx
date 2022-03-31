@@ -29,14 +29,14 @@ const ContentCard = (props: ContentCardProps) => {
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   const CardMedia = styled(props.media)(({ theme }) => ({
-    width: "50%",
+    width: "40%",
     [theme.breakpoints.down("md")]: {
       width: "100%",
     },
   }));
 
   const Card = styled(Box)(({ theme }) => ({
-    padding: "5%",
+    padding: "clamp(3rem, 5%, 10rem)",
     background: theme.palette.background.default,
     display: "flex",
     flexDirection: props.alignment === "left" ? "row" : "row-reverse",
