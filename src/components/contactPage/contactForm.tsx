@@ -11,6 +11,8 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
+import { ContactFormData, Contact } from "../../services/contact";
+
 interface InputProps {
   type: "textSimple" | "textMultiple" | "select" | "phoneNumber";
   name: string;
@@ -28,33 +30,7 @@ const ContactForm = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      company: "",
-      capability: "",
-      inquiry: "",
-      details: "",
-    },
-    validationSchema: yup.object().shape({
-      firstName: yup.string().required("A first name is required"),
-      lastName: yup.string().required("A last name is required."),
-      email: yup.string().email().required("An email is required."),
-      phone: yup.number().required("A phone number is required."),
-      company: yup.string().required("A company is required."),
-      capability: yup.string().required("A capability is required."),
-      inquiry: yup.number().required("An inquiry reason is required."),
-      details: yup.string(),
-    }),
-    onSubmit: (values) => {
-      setCompleted(true);
-      console.log(values);
-    },
-  });
-
+  const inquiryReasons = ["Reason #1", "Reason #2", "Reason #3", "Reason #4"];
   const formInputFields: InputProps[] = [
     {
       type: "textSimple",
@@ -91,7 +67,7 @@ const ContactForm = () => {
       name: "inquiry",
       label: "What are you looking for?",
       select: {
-        options: ["Reason #1", "Reason #2", "Reason #3", "Reason #4"],
+        options: inquiryReasons,
       },
     },
     {
@@ -103,6 +79,42 @@ const ContactForm = () => {
       },
     },
   ];
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      company: "",
+      capability: "",
+      inquiry: "",
+      details: "",
+    },
+    validationSchema: yup.object().shape({
+      firstName: yup.string().required("A first name is required"),
+      lastName: yup.string().required("A last name is required."),
+      email: yup.string().email().required("An email is required."),
+      phone: yup.number().required("A phone number is required."),
+      company: yup.string().required("A company is required."),
+      capability: yup.string().required("A capability is required."),
+      inquiry: yup.number().required("An inquiry reason is required."),
+      details: yup.string(),
+    }),
+    onSubmit: async (values) => {
+      try {
+        const data = {
+          ...values,
+          inquiry: inquiryReasons[parseInt(values.inquiry)],
+        } as ContactFormData;
+        await Contact.addContactData(data);
+        setCompleted(true);
+      } catch (err) {
+        const error = err as Error;
+        console.log(error);
+      }
+    },
+  });
 
   if (!completed) {
     return (

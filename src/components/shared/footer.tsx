@@ -6,7 +6,7 @@ const AppFooter = styled(AppBar)(({ theme }) => ({
 
 const Footer = () => {
   return (
-    <AppFooter position="static">
+    <AppFooter position="sticky">
       <Toolbar disableGutters>
         <Typography
           variant="h6"

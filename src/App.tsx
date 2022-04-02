@@ -1,11 +1,5 @@
-import { useState, useLayoutEffect } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
+import { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { pink, deepPurple } from "@mui/material/colors";
 import { useMediaQuery, CssBaseline } from "@mui/material";
@@ -15,18 +9,7 @@ import ContactPage from "./pages/contactPage";
 
 import Navbar from "./components/shared/navbar";
 import Footer from "./components/shared/footer";
-
-interface WrapperProps {
-  children: JSX.Element;
-}
-
-const Wrapper = (props: WrapperProps) => {
-  const location = useLocation();
-  useLayoutEffect(() => {
-    document.documentElement.scrollTo(0, 0);
-  }, [location.pathname]);
-  return props.children;
-};
+import Wrapper from "./components/shared/wrapper";
 
 const App = () => {
   const [showNavbar, setShowNavbar] = useState(true);
@@ -61,18 +44,18 @@ const App = () => {
     <ThemeProvider theme={{ ...(light ? lightTheme : darkTheme), changeTheme }}>
       <CssBaseline />
       <BrowserRouter>
-        <Navbar show={showNavbar} />
-        <Wrapper>
-          <Routes>
-            <Route
-              path="/"
-              element={<MainPage setShowNavbar={setShowNavbar} />}
-            />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </Wrapper>
-        <Footer />
+          <Navbar show={showNavbar} />
+          <Wrapper>
+            <Routes>
+              <Route
+                path="/"
+                element={<MainPage setShowNavbar={setShowNavbar} />}
+              />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </Wrapper>
+          <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );
