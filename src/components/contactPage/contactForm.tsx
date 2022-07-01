@@ -6,6 +6,8 @@ import {
   useTheme,
   MenuItem,
   Button,
+  Select,
+  InputLabel,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useFormik } from "formik";
@@ -28,7 +30,7 @@ const ContactForm = () => {
       phone: "",
       company: "",
       capability: "",
-      inquiry: "",
+      inquiry: 0,
       details: "",
     },
     validationSchema: yup.object().shape({
@@ -42,10 +44,11 @@ const ContactForm = () => {
       details: yup.string(),
     }),
     onSubmit: async (values) => {
+      console.log("NIGGERS");
       try {
         const data = {
           ...values,
-          inquiry: inquiryReasons[parseInt(values.inquiry)],
+          inquiry: inquiryReasons[values.inquiry],
         } as ContactFormData;
         await Contact.addContactData(data);
         setCompleted(true);
@@ -104,9 +107,7 @@ const ContactForm = () => {
                 label="Email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
-                error={
-                  formik.touched.email && Boolean(formik.errors.email)
-                }
+                error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
               />
             </Grid>
@@ -118,9 +119,7 @@ const ContactForm = () => {
                 label="Phone Number"
                 value={formik.values.phone}
                 onChange={formik.handleChange}
-                error={
-                  formik.touched.phone && Boolean(formik.errors.phone)
-                }
+                error={formik.touched.phone && Boolean(formik.errors.phone)}
                 helperText={formik.touched.phone && formik.errors.phone}
               />
             </Grid>
@@ -132,9 +131,7 @@ const ContactForm = () => {
                 label="Company"
                 value={formik.values.company}
                 onChange={formik.handleChange}
-                error={
-                  formik.touched.company && Boolean(formik.errors.company)
-                }
+                error={formik.touched.company && Boolean(formik.errors.company)}
                 helperText={formik.touched.company && formik.errors.company}
               />
             </Grid>
@@ -149,10 +146,30 @@ const ContactForm = () => {
                 error={
                   formik.touched.capability && Boolean(formik.errors.capability)
                 }
-                helperText={formik.touched.capability && formik.errors.capability}
+                helperText={
+                  formik.touched.capability && formik.errors.capability
+                }
               />
             </Grid>
             <Grid item xs={12}>
+              {/* <Select
+                fullWidth
+                id="inquiry"
+                name="inquiry"
+                labelId="inquiry-label"
+                displayEmpty
+                value={formik.values.inquiry}
+                onChange={formik.handleChange}
+                error={formik.touched.inquiry && Boolean(formik.errors.inquiry)}
+              >
+                {inquiryReasons.map((value, index) => {
+                  return (
+                    <MenuItem key={index} value={value}>
+                      {value}
+                    </MenuItem>
+                  );
+                })}
+              </Select> */}
               <TextField
                 fullWidth
                 select
@@ -161,13 +178,15 @@ const ContactForm = () => {
                 label="What are you looking for?"
                 value={formik.values.inquiry}
                 onChange={formik.handleChange}
-                error={
-                  formik.touched.inquiry && Boolean(formik.errors.inquiry)
-                }
+                error={formik.touched.inquiry && Boolean(formik.errors.inquiry)}
                 helperText={formik.touched.inquiry && formik.errors.inquiry}
               >
                 {inquiryReasons.map((value, index) => {
-                  return <MenuItem key={index} value={value}>{value}</MenuItem>
+                  return (
+                    <MenuItem key={index} value={index}>
+                      {value}
+                    </MenuItem>
+                  );
                 })}
               </TextField>
             </Grid>
@@ -181,13 +200,11 @@ const ContactForm = () => {
                 label="Any comments or questions"
                 value={formik.values.details}
                 onChange={formik.handleChange}
-                error={
-                  formik.touched.details && Boolean(formik.errors.details)
-                }
+                error={formik.touched.details && Boolean(formik.errors.details)}
                 helperText={formik.touched.details && formik.errors.details}
               />
             </Grid>
-            
+
             <Grid item xs={12}>
               <Button
                 fullWidth

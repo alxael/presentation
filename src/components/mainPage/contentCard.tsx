@@ -4,6 +4,7 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  Grid,
 } from "@mui/material";
 
 const CardInfo = styled("div")(({ theme }) => ({
@@ -13,10 +14,22 @@ const CardInfo = styled("div")(({ theme }) => ({
   },
 }));
 
+const Item = styled(Box)(({ theme }) => ({
+  backgroundColor:
+    theme.palette.mode === "dark"
+      ? theme.palette.grey[900]
+      : theme.palette.grey[300],
+  borderRadius: "0.5rem",
+  padding: theme.spacing(2),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
+
 export interface ContentCardProps {
   title: string;
-  description: string;
+  description: string[];
   alignment: "left" | "right";
+  textAlignment: "left" | "right";
   media: React.FunctionComponent<
     React.SVGProps<SVGSVGElement> & {
       title?: string | undefined;
@@ -50,15 +63,37 @@ const ContentCard = (props: ContentCardProps) => {
     <Card>
       <CardMedia />
       <CardInfo>
-        <Typography variant="h3" align={matches ? "center" : props.alignment}>
+        <Typography
+          variant="h3"
+          align={matches ? "center" : props.alignment}
+          gutterBottom
+        >
           {props.title}
         </Typography>
-        <Typography
+        <Grid container spacing={2}>
+          {props.description.map((value, index) => {
+            return (
+              <Grid item xs={matches ? 12 : 6} key={index}>
+                <Item key={index}>
+                  <Typography
+                    variant="body1"
+                    color={theme.palette.text.primary}
+                    align={matches ? "center" : props.textAlignment}
+                  >
+                    {value}
+                  </Typography>
+                </Item>
+              </Grid>
+            );
+          })}
+        </Grid>
+
+        {/* <Typography
           variant="body1"
           align={matches ? "center" : props.alignment}
         >
           {props.description}
-        </Typography>
+        </Typography> */}
       </CardInfo>
     </Card>
   );

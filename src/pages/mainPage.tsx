@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Box, styled, Typography, Divider, Button } from "@mui/material";
 import { useTheme } from "@mui/material";
 
-import { ReactComponent as SomeRandomSvg } from "../svgs/404.svg";
+import { ReactComponent as DataSvg1 } from "../svgs/data1.svg";
+import { ReactComponent as DataSvg2 } from "../svgs/data2.svg";
+
 import ContentCard, {
   ContentCardProps,
 } from "../components/mainPage/contentCard";
@@ -45,18 +47,28 @@ const MainPage = (props: MainPageProps) => {
 
   const contentCards: ContentCardProps[] = [
     {
-      title: "Reason #1 you should work with us",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eget ante dolor. Ut ut sagittis metus, pretium pulvinar ligula. Nulla bibendum tortor auctor augue varius, et maximus magna dictum. Pellentesque vel turpis pellentesque, pretium velit a, pharetra neque. Aenean blandit ornare ipsum eu consectetur. Etiam convallis efficitur accumsan. Phasellus maximus rhoncus auctor. Maecenas faucibus lobortis ligula ut venenatis. Nullam sit amet nibh non risus lobortis sollicitudin. Nam tristique efficitur ante, porttitor facilisis diam vehicula ut. Mauris cursus enim dolor, et sagittis diam scelerisque nec.",
+      title: "Cloud Engineering",
+      description: [
+        `Only when organizations are assured of a stable IT infrastructure, a reliable, scalable, agile, and secure foundation, can they even dream big on behalf of their clients.`,
+        `Even amazing products and services, that are truly customer-centric, can fail when they are riddled with performance, scalability, and security issues. Hence the need for reliable Cloud Engineering.`,
+        `With its expertise across all the Private/Public cloud providers, FrightFlex can recommend the right choice/combination of platforms that can yield sustainable results for your business.`,
+        `Regardless of where you are in your cloud journey, FrightFlex can provide with you with cloud migration, modernization, optimization support required to make the most out of your cloud investments.`,
+      ],
       alignment: "right",
-      media: SomeRandomSvg,
+      textAlignment: "left",
+      media: DataSvg1,
     },
     {
-      title: "Reason #2 you should work with us",
-      description:
-        "Pellentesque eu orci mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed ut felis et neque vulputate facilisis vel sed elit. Maecenas odio diam, dictum at vestibulum sed, convallis egestas turpis. Suspendisse pretium eros in nulla iaculis pharetra. Cras faucibus ipsum in suscipit aliquet. Phasellus rutrum lacus sodales, iaculis nisl sed, maximus diam. Etiam porttitor pulvinar justo eu pretium. Aliquam aliquet metus magna, in mollis nisi vehicula eget.",
+      title: "Data and Analytics",
+      description: [
+        `Data engineering and analytics services ensure smooth and rapid movement of data – from its origin to places of consumption, with minimum distortion.`,
+        `Organizations can make qualified, data-driven decisions for driving business outcomes including revenue generation, customer experience and operational efficiency.`,
+        `With a ton of options available to perform this process, organizations are stumbling their way through their architectural decisions. And more often than not, the ‘obvious choice’ need not be the right choice for your business.`,
+        `With deep expertise and vast experience, both in commercial and open source tools FrightFlex can help you explore these options and make technology work to meet your unique data engineering and analytics needs.`,
+      ],
       alignment: "left",
-      media: SomeRandomSvg,
+      textAlignment: "left",
+      media: DataSvg2,
     },
   ];
 
@@ -72,11 +84,12 @@ const MainPage = (props: MainPageProps) => {
   }, []);
 
   useEffect(() => {
-    if (scrollPosition < window.innerHeight / 2) {
-      props.setShowNavbar(false);
-    } else {
-      props.setShowNavbar(true);
-    }
+    props.setShowNavbar(true);
+    // if (scrollPosition < window.innerHeight / 2) {
+    //   props.setShowNavbar(false);
+    // } else {
+    //   props.setShowNavbar(true);
+    // }
   }, [props, props.setShowNavbar, scrollPosition]);
 
   return (
@@ -89,12 +102,8 @@ const MainPage = (props: MainPageProps) => {
         >
           FrightFlex
         </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="primary.contrastText"
-        >
-          We turn your vision into reality.
+        <Typography variant="h5" align="center" color="primary.contrastText">
+          Attract More, Retain More
         </Typography>
       </Hero>
       {contentCards.map((value, index) => {
@@ -122,7 +131,9 @@ const MainPage = (props: MainPageProps) => {
         </Typography>
         <Button
           variant="outlined"
-          color="inherit"
+          sx={{
+            filter: "brightness(0) invert(1)"
+          }}
           size="large"
           onClick={() => {
             setTimeout(() => {
