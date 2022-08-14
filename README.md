@@ -3,7 +3,7 @@
 A simple presentation web application built for a software development company.
 
 ## Installation and setup
-- Step 1: Copy the repository using the Azure DevOps UI. Preferably copy branch #54 as it contains the latest version.
+- Step 1: Copy the repository.
 
 - Step 2: Ensure _Node.js_ and _npm_ are installed on your machine.
 
