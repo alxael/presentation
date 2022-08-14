@@ -6,27 +6,21 @@ import {
   useTheme,
   MenuItem,
   Button,
+  Select,
+  InputLabel,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-interface InputProps {
-  type: "textSimple" | "textMultiple" | "select" | "phoneNumber";
-  name: string;
-  label: string;
-  textMultiple?: {
-    maxRows: number;
-  };
-  select?: {
-    options: string[];
-  };
-}
+import { ContactFormData, Contact } from "../../services/contact";
 
 const ContactForm = () => {
   const [completed, setCompleted] = useState(false);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const inquiryReasons = ["Reason #1", "Reason #2", "Reason #3", "Reason #4"];
 
   const formik = useFormik({
     initialValues: {
@@ -36,7 +30,7 @@ const ContactForm = () => {
       phone: "",
       company: "",
       capability: "",
-      inquiry: "",
+      inquiry: 0,
       details: "",
     },
     validationSchema: yup.object().shape({
@@ -49,60 +43,21 @@ const ContactForm = () => {
       inquiry: yup.number().required("An inquiry reason is required."),
       details: yup.string(),
     }),
-    onSubmit: (values) => {
-      setCompleted(true);
-      console.log(values);
+    onSubmit: async (values) => {
+      console.log("NIGGERS");
+      try {
+        const data = {
+          ...values,
+          inquiry: inquiryReasons[values.inquiry],
+        } as ContactFormData;
+        await Contact.addContactData(data);
+        setCompleted(true);
+      } catch (err) {
+        const error = err as Error;
+        console.log(error);
+      }
     },
   });
-
-  const formInputFields: InputProps[] = [
-    {
-      type: "textSimple",
-      name: "firstName",
-      label: "First Name",
-    },
-    {
-      type: "textSimple",
-      name: "lastName",
-      label: "Last Name",
-    },
-    {
-      type: "textSimple",
-      name: "email",
-      label: "Email",
-    },
-    {
-      type: "phoneNumber",
-      name: "phone",
-      label: "Phone number",
-    },
-    {
-      type: "textSimple",
-      name: "company",
-      label: "Company",
-    },
-    {
-      type: "textSimple",
-      name: "capability",
-      label: "Capability",
-    },
-    {
-      type: "select",
-      name: "inquiry",
-      label: "What are you looking for?",
-      select: {
-        options: ["Reason #1", "Reason #2", "Reason #3", "Reason #4"],
-      },
-    },
-    {
-      type: "textMultiple",
-      name: "details",
-      label: "Any comments or questions?",
-      textMultiple: {
-        maxRows: 5,
-      },
-    },
-  ];
 
   if (!completed) {
     return (
@@ -116,56 +71,140 @@ const ContactForm = () => {
         </Typography>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
-            {formInputFields.map((value, index) => {
-              return (
-                <Grid
-                  item
-                  xs={
-                    matches ||
-                    value.type === "textMultiple" ||
-                    value.type === "select"
-                      ? 12
-                      : 6
-                  }
-                  key={index}
-                >
-                  <TextField
-                    fullWidth
-                    select={value.type === "select"}
-                    multiline={value.type === "textMultiple"}
-                    maxRows={
-                      value.type === "textMultiple" &&
-                      value.textMultiple !== undefined
-                        ? value.textMultiple.maxRows
-                        : undefined
-                    }
-                    id={value.name}
-                    name={value.name}
-                    label={value.label}
-                    value={(formik.values as any)[value.name]}
-                    onChange={formik.handleChange}
-                    error={
-                      (formik.touched as any)[value.name] &&
-                      Boolean((formik.errors as any)[value.name])
-                    }
-                    helperText={
-                      (formik.touched as any)[value.name] &&
-                      (formik.errors as any)[value.name]
-                    }
-                  >
-                    {value.type === "select" &&
-                      value.select !== undefined &&
-                      value.select.options.map((value, index) => {
-                        return (
-                          <MenuItem key={index} value={index}>
-                            {value}
-                          </MenuItem>
-                        );
-                      })}
-                  </TextField>
-                </Grid>
-              );
-            })}
+            <Grid item xs={matches ? 12 : 6}>
+              <TextField
+                fullWidth
+                id="firstName"
+                name="firstName"
+                label="First name"
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.firstName && Boolean(formik.errors.firstName)
+                }
+                helperText={formik.touched.firstName && formik.errors.firstName}
+              />
+            </Grid>
+            <Grid item xs={matches ? 12 : 6}>
+              <TextField
+                fullWidth
+                id="lastName"
+                name="lastName"
+                label="Last name"
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.lastName && Boolean(formik.errors.lastName)
+                }
+                helperText={formik.touched.lastName && formik.errors.lastName}
+              />
+            </Grid>
+            <Grid item xs={matches ? 12 : 6}>
+              <TextField
+                fullWidth
+                id="email"
+                name="email"
+                label="Email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+              />
+            </Grid>
+            <Grid item xs={matches ? 12 : 6}>
+              <TextField
+                fullWidth
+                id="phone"
+                name="phone"
+                label="Phone Number"
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                error={formik.touched.phone && Boolean(formik.errors.phone)}
+                helperText={formik.touched.phone && formik.errors.phone}
+              />
+            </Grid>
+            <Grid item xs={matches ? 12 : 6}>
+              <TextField
+                fullWidth
+                id="company"
+                name="company"
+                label="Company"
+                value={formik.values.company}
+                onChange={formik.handleChange}
+                error={formik.touched.company && Boolean(formik.errors.company)}
+                helperText={formik.touched.company && formik.errors.company}
+              />
+            </Grid>
+            <Grid item xs={matches ? 12 : 6}>
+              <TextField
+                fullWidth
+                id="capability"
+                name="capability"
+                label="Capability"
+                value={formik.values.capability}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.capability && Boolean(formik.errors.capability)
+                }
+                helperText={
+                  formik.touched.capability && formik.errors.capability
+                }
+              />
+            </Grid>
+            <Grid item xs={12}>
+              {/* <Select
+                fullWidth
+                id="inquiry"
+                name="inquiry"
+                labelId="inquiry-label"
+                displayEmpty
+                value={formik.values.inquiry}
+                onChange={formik.handleChange}
+                error={formik.touched.inquiry && Boolean(formik.errors.inquiry)}
+              >
+                {inquiryReasons.map((value, index) => {
+                  return (
+                    <MenuItem key={index} value={value}>
+                      {value}
+                    </MenuItem>
+                  );
+                })}
+              </Select> */}
+              <TextField
+                fullWidth
+                select
+                id="inquiry"
+                name="inquiry"
+                label="What are you looking for?"
+                value={formik.values.inquiry}
+                onChange={formik.handleChange}
+                error={formik.touched.inquiry && Boolean(formik.errors.inquiry)}
+                helperText={formik.touched.inquiry && formik.errors.inquiry}
+              >
+                {inquiryReasons.map((value, index) => {
+                  return (
+                    <MenuItem key={index} value={index}>
+                      {value}
+                    </MenuItem>
+                  );
+                })}
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                multiline
+                maxRows={5}
+                id="details"
+                name="details"
+                label="Any comments or questions"
+                value={formik.values.details}
+                onChange={formik.handleChange}
+                error={formik.touched.details && Boolean(formik.errors.details)}
+                helperText={formik.touched.details && formik.errors.details}
+              />
+            </Grid>
+
             <Grid item xs={12}>
               <Button
                 fullWidth
