@@ -84,12 +84,11 @@ const MainPage = (props: MainPageProps) => {
   }, []);
 
   useEffect(() => {
-    props.setShowNavbar(true);
-    // if (scrollPosition < window.innerHeight / 2) {
-    //   props.setShowNavbar(false);
-    // } else {
-    //   props.setShowNavbar(true);
-    // }
+    if (scrollPosition < window.innerHeight / 3) {
+      props.setShowNavbar(false);
+    } else {
+      props.setShowNavbar(true);
+    }
   }, [props, props.setShowNavbar, scrollPosition]);
 
   return (
@@ -102,7 +101,7 @@ const MainPage = (props: MainPageProps) => {
         >
           FrightFlex
         </Typography>
-        <Typography variant="h5" align="center" color="primary.contrastText">
+        <Typography variant="h5" align="center" color="primary.contrastText" gutterBottom>
           Attract More, Retain More
         </Typography>
       </Hero>

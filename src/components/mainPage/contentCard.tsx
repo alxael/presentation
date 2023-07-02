@@ -87,13 +87,6 @@ const ContentCard = (props: ContentCardProps) => {
             );
           })}
         </Grid>
-
-        {/* <Typography
-          variant="body1"
-          align={matches ? "center" : props.alignment}
-        >
-          {props.description}
-        </Typography> */}
       </CardInfo>
     </Card>
   );

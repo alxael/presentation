@@ -20,7 +20,7 @@ const ContactForm = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const inquiryReasons = ["Reason #1", "Reason #2", "Reason #3", "Reason #4"];
+  const inquiryReasons = ["Cloud engineering", "Data and Analytics", "Other"];
 
   const formik = useFormik({
     initialValues: {
@@ -44,7 +44,6 @@ const ContactForm = () => {
       details: yup.string(),
     }),
     onSubmit: async (values) => {
-      console.log("NIGGERS");
       try {
         const data = {
           ...values,
@@ -152,24 +151,6 @@ const ContactForm = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              {/* <Select
-                fullWidth
-                id="inquiry"
-                name="inquiry"
-                labelId="inquiry-label"
-                displayEmpty
-                value={formik.values.inquiry}
-                onChange={formik.handleChange}
-                error={formik.touched.inquiry && Boolean(formik.errors.inquiry)}
-              >
-                {inquiryReasons.map((value, index) => {
-                  return (
-                    <MenuItem key={index} value={value}>
-                      {value}
-                    </MenuItem>
-                  );
-                })}
-              </Select> */}
               <TextField
                 fullWidth
                 select
