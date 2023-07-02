@@ -1,6 +1,6 @@
 # FrightFlex [![Netlify Status](https://api.netlify.com/api/v1/badges/7d0d1c53-5fe6-4b3e-a3bf-345c00e0b19d/deploy-status)](https://app.netlify.com/sites/cheery-squirrel-e30888/deploys)
 
-A simple presentation web application built for a software development company.
+A simple presentation web application built for a software development company. A hosted version of this website can be found [here](https://cheery-squirrel-e30888.netlify.app).
 
 ## Installation and setup
 - Step 1: Copy the repository.
